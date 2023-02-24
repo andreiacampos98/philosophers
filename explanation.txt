@@ -1,0 +1,38 @@
+                                                                           explanation.txt                                                                             Modified
+Differences between threads and processes
+
+    Threads
+        The threads are executing with the same memory /share memory
+        The process id is the same
+        All threads can access all the variables
+
+
+    Processes
+        The process are executing individually
+        The process id is different
+        We duplicate all the variables
+
+
+
+Races conditions
+
+    The threads are reading at same time the number
+    This problem will be solving by mutex
+
+Mutex
+    It works like a lock
+    phtread_mutex_t type of variable
+
+    pthread_mutex_init() 
+    pthread_mutex_destroy()
+    pthread_mutex_lock()
+    pthread_mutex_unlock()
+
+    when I do a function which will be use for differents threads, 
+    we need to use the pthread_mutex_lock() and pthread_mutex_unlock() 
+
+
+Loops with threads
+
+    Create an array of threads and then do a loop / while were we call the function pthread_create()
+    We can't do a loop with the function pthread_create and pthread_join at the same time.
