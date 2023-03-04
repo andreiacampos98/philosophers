@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:48:02 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/04 18:42:18 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:22:59 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	initialize_philo(t_philo **philo, t_rules *rules)
 		(*philo)[i].id = i + 1;
 		(*philo)[i].meals_counter = 0;
 		(*philo)[i].l_fork = i;
+		(*philo)[i].rules = rules;
 		if (i - 1 < 0)
 			(*philo)[i].r_fork = rules->nb_philosophers - 1;
 		else

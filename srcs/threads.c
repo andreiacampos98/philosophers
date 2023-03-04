@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:50:21 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/04 18:10:17 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:11:35 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,18 @@ void	*routine(void *arg)
 	int	i;
 	t_philo	*philo;
 	t_rules	*rules;
-	char	*timestamp;
 
 	philo = (t_philo *)arg;
 	i = 0;
 	rules = philo->rules;
+	printf("Thread %d created\n", ((t_philo *)arg)->id);
 	while (rules->nb_total_eat == 0 && rules->stop == 0)
 	{
 		philo_eat(philo, rules);
-		timestamp = ft_itoa(get_time() - rules->start_time);
-		printf("%s philosopher[%i] is sleeping", timestamp, philo->id);
+		philo_print("is sleeping", philo, 1);
 		ft_sleep(rules->time_to_sleep, rules);
-		timestamp = ft_itoa(get_time() - rules->start_time);
-		printf("%s philosopher[%i] is thinking", timestamp, philo->id);
+		philo_print("is thinking", philo, 1);
 	}
-	printf("Thread %d created\n", ((t_philo *)arg)->id);
 	return (NULL);
 }
 
@@ -51,7 +48,6 @@ void	ft_exit_threads(t_rules *rules)
 		while (i < rules->nb_philosophers)
 		{
 			pthread_join(rules->philos[i].thread_id, NULL);
-			printf("A");
 			i++;
 		}
 	}
@@ -62,6 +58,7 @@ void	ft_exit_threads(t_rules *rules)
 		i++;
 	}
 	pthread_mutex_destroy(&rules->meal);
+	pthread_mutex_destroy(&rules->writing);
 	free(rules->philos);
 	free(rules->forks);
 }
@@ -76,11 +73,12 @@ int	ft_init_threads(t_rules *rules)
 	{
 		rules->philos[i].last_ate = get_time();
 		if (pthread_create(&rules->philos[i].thread_id, NULL,
-			&routine, (void *)&(rules)->philos[i]))
+			&routine, &(rules)->philos[i]))
 			return (0);
 		i++;
 	}
 	philo_dead(rules, rules->philos);
+	pthread_mutex_unlock(&rules->writing);
 	ft_exit_threads(rules);
 	return (1);
 }

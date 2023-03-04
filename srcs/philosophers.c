@@ -6,12 +6,14 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:15:10 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/04 16:50:03 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/04 18:52:55 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/philosophers.h"
-
+/*Initially, I verify the arguments.
+Then I will initialize the two structures
+Then I will start the threads.*/
 int	main(int argc, char **argv)
 {
 	t_rules	rules;
