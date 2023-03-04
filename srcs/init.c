@@ -6,30 +6,25 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:48:02 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/02/25 20:20:53 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/04 18:42:18 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/philosophers.h"
 
-int	initialize_rules(t_rules *rules, char **argv)
+void	initialize_rules(t_rules *rules, char **argv)
 {
 	rules->nb_philosophers = ft_atoi(argv[1]);
 	rules->time_to_die = ft_atoi(argv[2]);
 	rules->time_to_eat = ft_atoi(argv[3]);
 	rules->time_to_sleep = ft_atoi(argv[4]);
-	/*if (rules->nb_philosophers < 2 || rules->time_to_die < 0
-		|| rules->time_to_eat < 0 || rules->time_to_sleep < 0)
-		return (0);*/
+	rules->start_time = 0;
+	rules->nb_total_eat = 0;
+	rules->stop = 0;
 	if (argv[5])
-	{
 		rules->nb_times_must_eat = ft_atoi(argv[5]);
-		if (rules->nb_times_must_eat <= 0)
-			return (0);
-	}
 	else
-		rules->nb_times_must_eat = -1;
-	return (1);
+		rules->nb_times_must_eat = 0;
 }
 
 int	initialize_philo(t_philo **philo, t_rules *rules)
@@ -51,22 +46,46 @@ int	initialize_philo(t_philo **philo, t_rules *rules)
 	return (1);
 }
 
-int	init_all(t_rules *rules, t_philo **philo, char **argv)
+int	ft_init_mutex(t_rules *rules)
 {
-	if (initialize_rules(rules, argv) == 0)
+	int	i;
+
+	i = 0;
+	while (i < rules->nb_philosophers)
 	{
-		printf("Here\n");
-		return(0);
+		if(pthread_mutex_init(&(rules->forks[i]), NULL))
+			return(0);
+		i++;
 	}
-	*philo = (t_philo *)malloc(sizeof(t_philo) * rules->nb_philosophers);
-	if (!(*philo))
+	if (pthread_mutex_init(&rules->meal, NULL))
+			return(0);
+	if (pthread_mutex_init(&rules->writing, NULL))
+			return(0);
+	return (1);
+}
+
+int	init_all(t_rules *rules, char **argv)
+{
+	initialize_rules(rules, argv);
+	rules->philos = (t_philo *)malloc(sizeof(t_philo) * rules->nb_philosophers);
+	if (!(rules->philos))
+		return (0);
+	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->nb_philosophers);
+	if (!rules->forks)
 	{
-		printf("Here 2\n");
+		free(rules->philos);
 		return (0);
 	}
-	if (initialize_philo(philo, rules) == 0)
+	if (ft_init_mutex(rules) == 0)
 	{
-		printf("Here 3\n");
+		free(rules->philos);
+		free(rules->forks);
+		return (0);
+	}
+	if (initialize_philo(&(rules)->philos ,rules) == 0)
+	{
+		free(rules->philos);
+		free(rules->forks);
 		return (0);
 	}
 	return (1);

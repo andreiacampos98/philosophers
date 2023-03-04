@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:20:13 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/02/25 20:14:41 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/04 17:49:17 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_check_arg(int argc, char **argv)
 			printf("The argument is not a number.");
 			return (0);
 		}
-		if (ft_atoi(argv[argc - 1]) > INT_MAX || ft_atoi(argv[argc - 1]) < 0)
+		if (ft_atoi(argv[argc - 1]) > INT_MAX || ft_atoi(argv[argc - 1]) <= 0)
 		{
 			printf("The argument is not a positive INT");
 			return (0);

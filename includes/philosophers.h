@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:11:27 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/02/25 22:17:01 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/04 17:34:31 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@
 
 typedef struct	s_philo
 {
-	int	id;
-	int	meals_counter;
-	int	l_fork;
-	int	r_fork;
-	int	start_time;
-	int	last_ate;
+	int				id;
+	int				meals_counter;
+	int				l_fork;
+	int				r_fork;
+	unsigned long	last_ate;
+	struct s_rules	*rules;
+	pthread_t		thread_id;
 }		t_philo;
 
 typedef struct	s_rules
@@ -38,8 +39,12 @@ typedef struct	s_rules
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					nb_times_must_eat;
+	int					nb_total_eat;
+	int					stop;
+	unsigned long		start_time;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		meal;
+	pthread_mutex_t		writing;
 	t_philo				*philos;
 }		t_rules;
 
@@ -54,9 +59,15 @@ unsigned long	get_time(void);
 int	ft_check_arg(int argc, char **argv);
 
 /******************* Init *********************/
-int	init_all(t_rules *rules, t_philo **philo, char **argv);
+int	init_all(t_rules *rules, char **argv);
 
-int	ft_init_threads(t_rules *rules, t_philo *philo);
+/******************* Threads *********************/
+int	ft_init_threads(t_rules *rules);
+
+/******************* philo_functions *********************/
+void	philo_eat(t_philo *philo, t_rules *rules);
+void	ft_sleep(unsigned long duration, t_rules *rules);
+void	philo_dead(t_rules *rules, t_philo *philo);
 
 /******************* Util *********************/
 
