@@ -6,11 +6,11 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:00:35 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/02/25 22:03:56 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/05 13:27:08 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
 long int	ft_atoi(const char *str)
 {

@@ -6,22 +6,21 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:11:27 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/04 18:56:57 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/05 13:23:48 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <limits.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <limits.h>
 # include <sys/time.h>
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				meals_counter;
@@ -32,7 +31,7 @@ typedef struct	s_philo
 	pthread_t		thread_id;
 }		t_philo;
 
-typedef struct	s_rules
+typedef struct s_rules
 {
 	int					nb_philosophers;
 	int					time_to_die;
@@ -49,26 +48,26 @@ typedef struct	s_rules
 }		t_rules;
 
 /******************* Util *********************/
-long int	ft_atoi(const char *str);
-char		*ft_itoa(int n);
+long int		ft_atoi(const char *str);
+char			*ft_itoa(int n);
 
 /******************* Time Util *********************/
 unsigned long	get_time(void);
 
 /******************* Check_args *********************/
-int	ft_check_arg(int argc, char **argv);
+int				ft_check_arg(int argc, char **argv);
 
 /******************* Init *********************/
-int	init_all(t_rules *rules, char **argv);
+int				init_all(t_rules *rules, char **argv);
 
 /******************* Threads *********************/
-int	ft_init_threads(t_rules *rules);
+int				ft_init_threads(t_rules *rules);
 
 /******************* philo_functions *********************/
-void	philo_eat(t_philo *philo, t_rules *rules);
-void	ft_sleep(unsigned long duration, t_rules *rules);
-void	philo_dead(t_rules *rules, t_philo *philo);
-void	philo_print(char *msg, t_philo *philo, int unlock);
+void			philo_eat(t_philo *philo, t_rules *rules);
+void			ft_sleep(unsigned long duration, t_rules *rules);
+void			philo_dead(t_rules *rules, t_philo *philo);
+void			philo_print(char *msg, t_philo *philo, int unlock);
 
 /******************* Util *********************/
 

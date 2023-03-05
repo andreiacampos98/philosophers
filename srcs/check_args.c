@@ -6,12 +6,12 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:20:13 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/04 17:49:17 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/05 13:39:20 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/philosophers.h"
-
+#include "../includes/philosophers.h"
+/*The function check if the character is a number.*/
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
@@ -20,11 +20,13 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
+/*The function check if the character is a signal.*/
 int	ft_issign(char c)
 {
 	return (c == '+' || c == '-');
 }
 
+/*The function check if the argument is a number.*/
 static int	arg_is_number(char *av)
 {
 	int	i;
@@ -39,17 +41,18 @@ static int	arg_is_number(char *av)
 	return (1);
 }
 
+/*The function check if the arguments are 4 or five*/
 int	ft_check_nb_args(int argc, char **argv)
 {
 	if (argc < 5)
 	{
 		printf("The number of arguments are less than expected");
-		return(0);
+		return (0);
 	}
 	if (argc > 6)
 	{
 		printf("The number of arguments are more than expected");
-		return(0);
+		return (0);
 	}
 	if (ft_atoi(argv[1]) == 0)
 	{
@@ -59,6 +62,8 @@ int	ft_check_nb_args(int argc, char **argv)
 	return (1);
 }
 
+/*The fucntion check for each argument if the argument is a number 
+and if the argument is a positive INT.*/
 int	ft_check_arg(int argc, char **argv)
 {
 	if (ft_check_nb_args(argc, argv) == 0)

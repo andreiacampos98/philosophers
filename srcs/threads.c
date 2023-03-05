@@ -6,19 +6,17 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:50:21 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/04 19:11:35 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/05 13:30:34 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/philosophers.h"
 
-# include "../includes/philosophers.h"
-
-# define PRINT(name, x) printf("%s: %d\n", name, x);
-# define DEBUG
-
+/*In this function, I will put the philosophers eating, thinking and sleeping
+ until died or achieve the number of times that they must eat.*/
 void	*routine(void *arg)
 {
-	int	i;
+	int		i;
 	t_philo	*philo;
 	t_rules	*rules;
 
@@ -26,6 +24,11 @@ void	*routine(void *arg)
 	i = 0;
 	rules = philo->rules;
 	printf("Thread %d created\n", ((t_philo *)arg)->id);
+	/*if (philo->id % 2 && rules->nb_philosophers > 1)
+	{
+		ft_sleep(rules->time_to_eat / 50, rules);
+		philo_print("is", philo, 1);
+	}*/
 	while (rules->nb_total_eat == 0 && rules->stop == 0)
 	{
 		philo_eat(philo, rules);
@@ -36,6 +39,7 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
+/*This function will close all the threads and mutexs.*/
 void	ft_exit_threads(t_rules *rules)
 {
 	int	i;
@@ -63,6 +67,11 @@ void	ft_exit_threads(t_rules *rules)
 	free(rules->forks);
 }
 
+/*For each philosophers, I have one variable pthread_t thread_id, 
+that I will initialize.
+The pthread_create will call the routine function.
+After, I call the function philo_dead and then
+I "close" the threads and mutex*/
 int	ft_init_threads(t_rules *rules)
 {
 	int	i;
@@ -73,7 +82,7 @@ int	ft_init_threads(t_rules *rules)
 	{
 		rules->philos[i].last_ate = get_time();
 		if (pthread_create(&rules->philos[i].thread_id, NULL,
-			&routine, &(rules)->philos[i]))
+				&routine, &(rules)->philos[i]))
 			return (0);
 		i++;
 	}

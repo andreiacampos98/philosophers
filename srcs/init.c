@@ -6,12 +6,23 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:48:02 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/04 19:22:59 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/05 13:33:55 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
+/*The function initialize the structure rules which contains:
+	the number of philosophers;
+	time to die;
+	time to eat;
+	time to sleep;
+	start time, when starts the program;
+	nb_total_eat which is a bolean that will be 1 if all philosophers
+		eat at least the number of times they must eat (argument 5)
+	nb_times_must_eat is the number of times the philosophers must eat 
+		and then the program finish. The program can finish earlier 
+		if one of the philosophers died.*/
 void	initialize_rules(t_rules *rules, char **argv)
 {
 	rules->nb_philosophers = ft_atoi(argv[1]);
@@ -27,6 +38,36 @@ void	initialize_rules(t_rules *rules, char **argv)
 		rules->nb_times_must_eat = 0;
 }
 
+/*In the structure rules, I create three variables pthread_mutex_t:
+	forks
+	meal
+	writing
+Now it is necessary initialize the variables with the function
+pthread_mutex_init.*/
+int	ft_init_mutex(t_rules *rules)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->nb_philosophers)
+	{
+		if (pthread_mutex_init(&(rules->forks[i]), NULL))
+			return (0);
+		i++;
+	}
+	if (pthread_mutex_init(&rules->meal, NULL))
+		return (0);
+	if (pthread_mutex_init(&rules->writing, NULL))
+		return (0);
+	return (1);
+}
+
+/*The function initialize the structure philo which contain:
+	the id of the philosopher;
+	meals_counter which says how many meals the philosopher eat;
+	l_fork, the number of left fork 
+	r_fork, the number of right fork;
+	last_ate, what time the philosopher eat for the last time*/
 int	initialize_philo(t_philo **philo, t_rules *rules)
 {
 	int	i;
@@ -47,24 +88,7 @@ int	initialize_philo(t_philo **philo, t_rules *rules)
 	return (1);
 }
 
-int	ft_init_mutex(t_rules *rules)
-{
-	int	i;
-
-	i = 0;
-	while (i < rules->nb_philosophers)
-	{
-		if(pthread_mutex_init(&(rules->forks[i]), NULL))
-			return(0);
-		i++;
-	}
-	if (pthread_mutex_init(&rules->meal, NULL))
-			return(0);
-	if (pthread_mutex_init(&rules->writing, NULL))
-			return(0);
-	return (1);
-}
-
+/*This funtion initialize all the variables*/
 int	init_all(t_rules *rules, char **argv)
 {
 	initialize_rules(rules, argv);
@@ -83,7 +107,7 @@ int	init_all(t_rules *rules, char **argv)
 		free(rules->forks);
 		return (0);
 	}
-	if (initialize_philo(&(rules)->philos ,rules) == 0)
+	if (initialize_philo(&(rules)->philos, rules) == 0)
 	{
 		free(rules->philos);
 		free(rules->forks);
