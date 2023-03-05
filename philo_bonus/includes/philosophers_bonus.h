@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:11:27 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 14:32:14 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:28:55 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,19 @@
 # include <limits.h>
 # include <sys/time.h>
 # include <semaphore.h>
+# include <sys/types.h>
+# include <fcntl.h>
+# include <sys/stat.h>
 
 typedef struct s_philo
 {
 	int				id;
+	pid_t			pid;
 	int				meals_counter;
 	int				l_fork;
 	int				r_fork;
 	unsigned long	last_ate;
 	struct s_rules	*rules;
-	pthread_t		thread_id;
 }		t_philo;
 
 typedef struct s_rules

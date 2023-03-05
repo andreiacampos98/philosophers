@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:50:21 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 14:33:28 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:45:11 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,19 @@ I "close" the threads and mutex*/
 int	ft_init_threads(t_rules *rules)
 {
 	int	i;
+	pthread_t	th;
 
 	i = 0;
-	rules->start_time = get_time();
 	while (i < rules->nb_philosophers)
 	{
-		rules->philos[i].last_ate = get_time();
-		if (pthread_create(&rules->philos[i].thread_id, NULL,
-				&routine, &(rules)->philos[i]))
-			return (0);
+		rules->(philo)[i].pid = fork();
+		if(!rules->(philo)[i].pid)
+		{
+			routine();
+		}
 		i++;
 	}
+	pthread_create(&th, NULL, &routine, &(rules)->philos[i]);
 	philo_dead(rules, rules->philos);
 	sem_post(&rules->writing);
 	ft_exit_threads(rules);
