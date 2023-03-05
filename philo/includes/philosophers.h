@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:11:27 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 13:23:48 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/05 14:32:04 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,5 @@ void			philo_eat(t_philo *philo, t_rules *rules);
 void			ft_sleep(unsigned long duration, t_rules *rules);
 void			philo_dead(t_rules *rules, t_philo *philo);
 void			philo_print(char *msg, t_philo *philo, int unlock);
-
-/******************* Util *********************/
 
 #endif
