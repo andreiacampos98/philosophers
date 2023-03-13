@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 21:23:18 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 13:26:53 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:13:01 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	philo_print(char *msg, t_philo *philo, int unlock)
 
 	timestamp = ft_itoa(get_time() - philo->rules->start_time);
 	pthread_mutex_lock(&philo->rules->writing);
-	if (!philo->rules->stop && !philo->rules->nb_times_must_eat)
+	if (!philo->rules->stop && !philo->rules->nb_total_eat)
 		printf("%s %d %s\n", timestamp, philo->id, msg);
 	if (unlock == 1)
 		pthread_mutex_unlock(&philo->rules->writing);
@@ -76,9 +76,9 @@ void	philo_dead(t_rules *rules, t_philo *philo)
 	int	i;
 
 	i = 0;
-	while (!rules->nb_total_eat)
+	while (rules->nb_total_eat == 0)
 	{
-		while (i < rules->nb_philosophers)
+		while (i < rules->nb_philosophers && rules->stop == 0)
 		{
 			pthread_mutex_lock(&rules->meal);
 			if ((int)(get_time() - philo[i].last_ate) >= rules->time_to_die)
@@ -92,7 +92,7 @@ void	philo_dead(t_rules *rules, t_philo *philo)
 		if (rules->stop == 1)
 			break ;
 		i = 0;
-		while (rules->nb_times_must_eat && i < rules->nb_philosophers
+		while (rules->nb_times_must_eat != 0 && i < rules->nb_philosophers
 			&& philo[i].meals_counter >= rules->nb_times_must_eat)
 			i++;
 		if (i == rules->nb_philosophers)

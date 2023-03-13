@@ -6,14 +6,14 @@
 #    By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/12 18:23:18 by anaraujo          #+#    #+#              #
-#    Updated: 2023/03/05 14:08:30 by anaraujo         ###   ########.fr        #
+#    Updated: 2023/03/13 19:45:32 by anaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 
 CC := cc -pthread
-CFLAGS := -Wall -Werror -Wextra -g
+CFLAGS := -Wall -Werror -Wextra -fsanitize=address -g 
 
 SRCS := ./srcs/check_args.c		./srcs/init.c				\
 		./srcs/philosophers.c	./srcs/threads.c			\

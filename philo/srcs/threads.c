@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:50:21 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 13:30:34 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/13 19:52:02 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	i = 0;
 	rules = philo->rules;
-	printf("Thread %d created\n", ((t_philo *)arg)->id);
-	/*if (philo->id % 2 && rules->nb_philosophers > 1)
+	if (philo->id % 2 == 0 && rules->nb_philosophers > 1)
 	{
 		ft_sleep(rules->time_to_eat / 50, rules);
-		philo_print("is", philo, 1);
-	}*/
+		philo_print("is sleeping", philo, 1);
+	}
 	while (rules->nb_total_eat == 0 && rules->stop == 0)
 	{
 		philo_eat(philo, rules);
