@@ -6,11 +6,11 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:50:21 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/13 19:52:02 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/14 22:03:08 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../include/philo.h"
 
 /*In this function, I will put the philosophers eating, thinking and sleeping
  until died or achieve the number of times that they must eat.*/
@@ -82,7 +82,11 @@ int	ft_init_threads(t_rules *rules)
 		rules->philos[i].last_ate = get_time();
 		if (pthread_create(&rules->philos[i].thread_id, NULL,
 				&routine, &(rules)->philos[i]))
+		{
+			while (i--)
+				pthread_join(rules->philos[i].thread_id, NULL);
 			return (0);
+		}
 		i++;
 	}
 	philo_dead(rules, rules->philos);

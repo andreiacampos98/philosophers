@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:48:02 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 18:39:10 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:10:31 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ S_IXUSR Execute (for ordinary files) or search (for directories)
 permission bit for the owner of the file*/
 int	ft_init_sem(t_rules *rules)
 {
-	sem_unlink("/philo_forks");
-	sem_unlink("/philo_writing");
-	sem_unlink("/philo_meal");
-	rules->forks = sem_open("/philo_forks", O_CREAT, S_IRWXU, rules->nb_philosophers);
-	rules->writing = sem_open("/philo_writing", O_CREAT, S_IRWXU, 1);
-	rules->meal = sem_open("/philo_meal", O_CREAT, S_IRWXU, 1);
+	sem_unlink("philo_forks");
+	sem_unlink("philo_writing");
+	sem_unlink("philo_meal");
+	rules->forks = sem_open("philo_forks", O_CREAT, S_IRWXU, rules->nb_philosophers);
+	rules->writing = sem_open("philo_writing", O_CREAT, S_IRWXU, 1);
+	rules->meal = sem_open("philo_meal", O_CREAT, S_IRWXU, 1);
 	if (rules->forks <= 0 || rules->writing <= 0 || rules->meal <= 0)
 		return (0);
 	return (1);

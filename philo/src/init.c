@@ -6,11 +6,11 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:48:02 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 13:33:55 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:29:26 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../include/philo.h"
 
 /*The function initialize the structure rules which contains:
 	the number of philosophers;

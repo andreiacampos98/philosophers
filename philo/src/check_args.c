@@ -6,11 +6,11 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:20:13 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 13:39:20 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:29:19 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../include/philo.h"
 /*The function check if the character is a number.*/
 int	ft_isdigit(int c)
 {

@@ -6,11 +6,11 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 21:23:18 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/13 20:13:01 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/14 22:03:46 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../include/philo.h"
 
 /*This function allow to write the logs in the terminal.
 I calcule the timestamp and lock the writing then, I will print the logs.

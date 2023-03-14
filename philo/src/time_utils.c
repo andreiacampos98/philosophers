@@ -6,11 +6,11 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 22:05:13 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 13:37:46 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:29:46 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../include/philo.h"
 
 /*A microsecond is a unit of time. 
 There are 1,000,000 microseconds in a second. 

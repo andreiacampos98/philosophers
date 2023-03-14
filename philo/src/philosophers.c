@@ -6,11 +6,11 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:15:10 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 13:31:27 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:29:37 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../include/philo.h"
 /*Initially, I verify the arguments.
 Then I will initialize the two structures
 Then I will start the threads.*/
