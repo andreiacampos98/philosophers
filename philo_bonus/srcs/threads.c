@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:50:21 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/05 18:45:11 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/03/14 23:05:27 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,16 @@
  until died or achieve the number of times that they must eat.*/
 void	*routine(void *arg)
 {
-	int		i;
 	t_philo	*philo;
 	t_rules	*rules;
 
 	philo = (t_philo *)arg;
-	i = 0;
 	rules = philo->rules;
-	printf("Thread %d created\n", ((t_philo *)arg)->id);
-	/*if (philo->id % 2 && rules->nb_philosophers > 1)
+	if (philo->id % 2 && rules->nb_philosophers > 1)
 	{
 		ft_sleep(rules->time_to_eat / 50, rules);
 		philo_print("is", philo, 1);
-	}*/
+	}
 	while (rules->nb_total_eat == 0 && rules->stop == 0)
 	{
 		philo_eat(philo, rules);
@@ -83,13 +80,12 @@ int	ft_init_threads(t_rules *rules)
 		rules->(philo)[i].pid = fork();
 		if(!rules->(philo)[i].pid)
 		{
-			routine();
+			routine(&rules->philosophers[i]);
+			exit (1);
 		}
 		i++;
 	}
-	pthread_create(&th, NULL, &routine, &(rules)->philos[i]);
-	philo_dead(rules, rules->philos);
-	sem_post(&rules->writing);
-	ft_exit_threads(rules);
+	pthread_create(&th, NULL, wait_children, &(rules)->philos[i]);
+	pthread_detach(rules->philos[0].thread_id);
 	return (1);
 }
