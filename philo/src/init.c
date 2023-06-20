@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:48:02 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/14 21:29:26 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:26:46 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	ft_init_mutex(t_rules *rules)
 	if (pthread_mutex_init(&rules->meal, NULL))
 		return (0);
 	if (pthread_mutex_init(&rules->writing, NULL))
+		return (0);
+	if (pthread_mutex_init(&rules->death, NULL))
 		return (0);
 	return (1);
 }

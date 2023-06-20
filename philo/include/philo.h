@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:11:27 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/14 22:04:02 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:34:14 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_rules
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		meal;
 	pthread_mutex_t		writing;
+	pthread_mutex_t		death;
 	t_philo				*philos;
 }		t_rules;
 
@@ -61,6 +62,7 @@ int				ft_check_arg(int argc, char **argv);
 int				init_all(t_rules *rules, char **argv);
 
 /******************* Threads *********************/
+int 			death_check(t_rules	*rules, int n);
 int				ft_init_threads(t_rules *rules);
 
 /******************* philo_functions *********************/
