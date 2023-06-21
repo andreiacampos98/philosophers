@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:15:10 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/06/21 23:16:17 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:30:32 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	philo_dead(t_rules *r, t_philo *philo)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	while (r->nb_total_eat == 0)
 	{
-		while (++i < r->nb_philo && death_check(r) == 0)
+		while (i < r->nb_philo && death_check(r) == 0)
 		{
 			pthread_mutex_lock(&r->meal);
 			if ((int)(get_time() - philo[i].last_ate) >= r->time_to_die)
@@ -46,6 +46,7 @@ void	philo_dead(t_rules *r, t_philo *philo)
 				r->stop = 1;
 			}
 			pthread_mutex_unlock(&r->meal);
+			i++;
 		}
 		if (death_check(r) == 1)
 			break ;
