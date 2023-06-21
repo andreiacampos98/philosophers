@@ -6,26 +6,37 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:50:21 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/06/20 22:18:22 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:11:50 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-/*In this function, I will put the philosophers eating, thinking and sleeping
- until died or achieve the number of times that they must eat.*/
-int death_check(t_rules	*rules, int n)
+int	death_check_total_eat(t_rules *rules)
 {
-	int status;
+	int	status;
 
 	status = 0;
-	
 	pthread_mutex_lock(&rules->death);
-	status = n;
+	status = rules->nb_total_eat;
 	pthread_mutex_unlock(&rules->death);
 	return (status);
 }
 
+int	death_check_comp(t_rules *rules, int i)
+{
+	int	status;
+
+	status = 0;
+	pthread_mutex_lock(&rules->death);
+	if (rules->philos[i].meals_counter >= rules->nb_eat)
+		status = 1;
+	pthread_mutex_unlock(&rules->death);
+	return (status);
+}
+
+/*In this function, I will put the philosophers eating, thinking and sleeping
+ until died or achieve the number of times that they must eat.*/
 void	*routine(void *arg)
 {
 	int		i;
@@ -35,18 +46,21 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	i = 0;
 	rules = philo->rules;
-	if (philo->id % 2 == 0 && rules->nb_philosophers > 1)
-	{
+	if (rules->nb_philo == 1)
+		philo_eat_one_philo(philo, rules);
+	else if (philo->id % 2 == 0 && rules->nb_philo > 1)
 		ft_sleep(rules->time_to_eat / 2, rules);
-		//philo_print("is sleeping", philo, 1);
-	}
-	//while (rules->nb_total_eat == 0 && rules->stop == 0)
-	while (death_check(rules, rules->nb_total_eat) == 0 && death_check(rules, rules->stop) == 0)
+	while (death_check_total_eat(rules) == 0 && rules->nb_philo > 1 \
+			&& death_check(rules) == 0)
 	{
 		philo_eat(philo, rules);
+		philo_eat_unlock_forks(philo, rules);
 		philo_print("is sleeping", philo, 1);
 		ft_sleep(rules->time_to_sleep, rules);
 		philo_print("is thinking", philo, 1);
+		if (rules->time_to_die - rules->time_to_sleep - rules->time_to_eat > 0)
+			ft_sleep((rules->time_to_die - rules->time_to_sleep - \
+						rules->time_to_eat) / 2, rules);
 	}
 	return (NULL);
 }
@@ -57,18 +71,18 @@ void	ft_exit_threads(t_rules *rules)
 	int	i;
 
 	i = 0;
-	if (rules->nb_philosophers == 1)
+	if (rules->nb_philo == 1)
 		pthread_detach(rules->philos[0].thread_id);
 	else
 	{	
-		while (i < rules->nb_philosophers)
+		while (i < rules->nb_philo)
 		{
 			pthread_join(rules->philos[i].thread_id, NULL);
 			i++;
 		}
 	}
 	i = 0;
-	while (i < rules->nb_philosophers)
+	while (i < rules->nb_philo)
 	{
 		pthread_mutex_destroy(&rules->forks[i]);
 		i++;
@@ -91,7 +105,7 @@ int	ft_init_threads(t_rules *rules)
 
 	i = 0;
 	rules->start_time = get_time();
-	while (i < rules->nb_philosophers)
+	while (i < rules->nb_philo)
 	{
 		rules->philos[i].last_ate = get_time();
 		if (pthread_create(&rules->philos[i].thread_id, NULL,
@@ -104,7 +118,6 @@ int	ft_init_threads(t_rules *rules)
 		i++;
 	}
 	philo_dead(rules, rules->philos);
-	pthread_mutex_unlock(&rules->writing);
 	ft_exit_threads(rules);
 	return (1);
 }

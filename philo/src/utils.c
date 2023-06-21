@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:00:35 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/03/14 21:29:52 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:01:17 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,15 @@ char	*ft_itoa(int n)
 	if (str == NULL)
 		return (0);
 	return (ft_fill_str(n, str, dig, nb));
+}
+
+/*A microsecond is a unit of time. 
+There are 1,000,000 microseconds in a second. 
+The next function returns miliseconds.*/
+unsigned long	get_time(void)
+{
+	struct timeval	x;
+
+	gettimeofday(&x, NULL);
+	return ((x.tv_sec * 1000) + (x.tv_usec / 1000));
 }

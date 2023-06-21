@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:11:27 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/06/20 20:34:14 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:11:38 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ typedef struct s_philo
 
 typedef struct s_rules
 {
-	int					nb_philosophers;
+	int					nb_philo;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
-	int					nb_times_must_eat;
+	int					nb_eat;
 	int					nb_total_eat;
 	int					stop;
 	unsigned long		start_time;
@@ -62,11 +62,15 @@ int				ft_check_arg(int argc, char **argv);
 int				init_all(t_rules *rules, char **argv);
 
 /******************* Threads *********************/
-int 			death_check(t_rules	*rules, int n);
+int				death_check(t_rules	*rules);
+int				death_check_comp(t_rules *rules, int i);
+int				death_check_total_eat(t_rules *rules);
 int				ft_init_threads(t_rules *rules);
 
 /******************* philo_functions *********************/
 void			philo_eat(t_philo *philo, t_rules *rules);
+void			philo_eat_unlock_forks(t_philo *philo, t_rules *rules);
+void			philo_eat_one_philo(t_philo *philo, t_rules *rules);
 void			ft_sleep(unsigned long duration, t_rules *rules);
 void			philo_dead(t_rules *rules, t_philo *philo);
 void			philo_print(char *msg, t_philo *philo, int unlock);
